@@ -1,0 +1,60 @@
+/**index.wxss**/
+.index {
+  margin-top: 200rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+text{
+  font-size: 32rpx;
+}
+
+.index-avatar {
+  width: 160rpx;
+  height: 160rpx;
+  margin: 40rpx;
+  border-radius: 50%;
+}
+
+.index-motto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 60rpx 0;
+  color: #aaa;
+}
+
+.group_container{
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.item_container{
+  padding: 20rpx;
+  background-color: white;
+}
+
+.name{
+  padding: 20rpx;
+  color: #aaa;
+}
+
+.title{
+  flex: 1;
+  font-size: 38rpx;
+}
+
+.date{
+  padding: 0 20rpx;
+  text-align: center;
+  font-size: 36rpx;
+  color: #aaa;
+}
+
+button{
+  margin-top: 40rpx;
+  margin-bottom: 40rpx;
+}

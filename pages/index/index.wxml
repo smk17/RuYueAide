@@ -1,0 +1,26 @@
+<!--index.wxml-->
+<progress wx:if="{{progress}}" percent="100" stroke-width="2" active />
+<view class="container">
+  <block wx:if="{{list.length == 0}}">
+    <view  bindtap="bindViewTap" class="index">
+      <image class="index-avatar" src="/images/logo.png" background-size="cover"></image>
+      <text>约见助手</text>
+    </view>
+    <view class="index-motto">
+      <text>暂无约见，点击发起</text>
+    </view>
+  </block>
+  <scroll-view style="height: {{height}}px;" wx:else >
+    <view class="group_container" wx:for="{{list}}" wx:key="name" wx:for-index="idx" wx:for-item="group" wx:if="{{group.list.length != 0}}">
+      <view class="name"><text>{{group.name}}</text></view>
+      <view class="item_container tap" wx:for="{{group.list}}" wx:key="id" data-item="{{idx}}" data-index="{{index}}" bindtap="onViewTap" >
+        <text class="title">{{item.title}}</text>
+        <view class="date"><text>{{item.datestr}}</text></view>
+        <image class="widget__arrow" src="/images/arrowright.png" mode="aspectFill" />
+      </view>
+      <view class="graySpace"></view>
+    </view>
+  </scroll-view>
+  <button type="primary" bindtap="onInitiateYueJian">发起约见</button>
+</view>
+<view id="toast" style="opacity: {{opacity}};">{{message}}</view>

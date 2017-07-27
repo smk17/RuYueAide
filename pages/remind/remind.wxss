@@ -1,0 +1,24 @@
+/* pages/remind/remind.wxss */
+.container, .no, .no_radio{
+  margin-top: 50rpx;
+}
+.radio{
+  min-height: 64rpx;
+  padding: 10rpx 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+  border-bottom: 2rpx solid #f9f9f9;
+}
+.no_radio{
+  width: 100%;
+  color: #aaa;
+  font-size: 32rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+text{
+  padding: 0 10rpx;
+}

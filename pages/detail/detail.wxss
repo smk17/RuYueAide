@@ -1,0 +1,110 @@
+/* pages/detail/detail.wxss */
+.container {
+  width: 96%;
+  margin: 30rpx 2% 60rpx 2%;
+  border-radius: 10rpx;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40rpx;
+}
+.title{
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+.address{
+  color: #aaa;
+  font-size: 28rpx;
+}
+.date{
+  width: 100%; 
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.date text{
+  padding-right: 40rpx;
+}
+.remark{
+  width: 100%; 
+  padding: 20rpx 0;
+  margin-top: 20rpx;
+  border-top: 4rpx solid #f9f9f9;
+}
+.participate{
+  width: 90%;
+  margin: 60rpx 5% 0 5%;
+}
+.participate_title{
+  color: #aaa;
+  font-size: 28rpx;
+}
+.item_container{
+  width: 100%; 
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.item{
+  width: 100%;
+  padding: 10rpx 0;
+  margin-top: 10rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.avatar {
+  width: 72rpx;
+  height: 72rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
+}
+.nick_view{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.nickname {
+  font-size: 28rpx;
+}
+.liuyan_container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.liuyan{
+  font-size: 28rpx;
+  margin-right: 20rpx;
+}
+.ly_input{
+  width: 100%;
+  background-color: white;
+  position: fixed; 
+  bottom: 0;
+  left: 0;
+}
+.ly_input input{
+  padding: 20rpx;
+  border: 5rpx solid #aaa;
+}
+.pp_name{
+  color: #aaa;
+  font-size: 32rpx;
+}
+text{
+  font-size: 36rpx;
+  margin-top: 20rpx;
+}
+map{
+  width: 100%; 
+  height: 200rpx;
+  margin: 20rpx 0;
+  border-radius: 10rpx;
+}
+button{
+  margin-top: 40rpx;
+  width: 90%;
+}

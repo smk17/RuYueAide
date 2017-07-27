@@ -1,0 +1,68 @@
+/* pages/initiate/initiate.wxss */
+.container{
+  align-items: flex-start;
+  font-size: 32rpx;
+}
+.modify{
+  margin: 40rpx 20rpx;
+  color: #aaa;
+}
+.reset{
+  margin: 0 20rpx;
+  color: #2982D2;
+}
+.reset:active{
+  opacity: 0.4; 
+}
+.index_container{
+  margin-top: 40rpx;
+  background: white;
+  padding: 0 20rpx;
+}
+input{
+  min-height: 100rpx;
+  font-size: 48rpx;
+}
+.placeholder{
+  color: #aaa;
+}
+.flex {
+  flex: 1;
+}
+.time{
+  flex: 1;
+  padding: 0 20rpx;
+}
+.picker{
+  width: 100%;
+  height: 150rpx;
+  margin: 50rpx 0;
+}
+.indicator{
+  height: 50rpx;
+}
+.picker_weeks{
+  width: 50%
+}
+.picker_column{
+  line-height: 50rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content:center;
+}
+.type_input{
+  flex: 3;
+  font-size: 32rpx;
+}
+textarea{
+  margin-top: 40rpx;
+  border-top:2rpx solid #f9f9f9;
+  border-bottom:2rpx solid #f9f9f9;
+  height: 100rpx;
+  padding: 20rpx;
+  background: white;
+}
+button{
+  margin-bottom: 40rpx;
+}

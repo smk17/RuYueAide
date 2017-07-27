@@ -1,0 +1,15 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/initiate/initiate",
+    "pages/remind/remind",
+    "pages/detail/detail",
+    "pages/detail/edit/edit"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#2982D2",
+    "navigationBarTitleText": "约见助手",
+    "navigationBarTextStyle":"white"
+  }
+}

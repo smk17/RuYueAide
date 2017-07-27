@@ -1,0 +1,39 @@
+<!--pages/detail/detail.wxml-->
+<progress wx:if="{{progress}}" percent="100" stroke-width="2" active />
+<view class="container" style="padding-bottom: {{remark==''?'40rpx':0}};">
+  <text class="title">{{title}}</text>
+  <view class="date">
+    <text>{{date}}</text>
+    <text>{{time}}</text>
+  </view>
+  <text>{{markers[0].name}}</text>
+  <text class="address">{{address}}</text>
+  <map latitude="{{markers[0].latitude}}" longitude="{{markers[0].longitude}}" 
+    markers="{{markers}}" bindtap="mapTap"></map>
+  <view class="remark" wx:if="{{remark != ''}}">
+    <text>{{remark}}</text>
+  </view>
+</view>
+<button wx:if="{{is_initiate}}" type="primary" open-type="share" >发送{{type}}邀请</button>
+<button wx:else type="primary" bindtap="onYueJian" >{{is_join?'修改提醒':'确认'+type}}</button>
+<button wx:if="{{is_join}}" bindtap="editYueJian">{{is_initiate?'编辑':'取消'}}{{type}}</button>
+<view class="participate">
+  <text class="participate_title">{{participates.length}}人参加</text>
+  <view class="item_container">
+    <view class="item" wx:for="{{participates}}" wx:key="nickName">
+      <image class="avatar" src="{{item.avatarUrl}}" background-size="cover"></image>
+      <view class="nick_view">
+        <text class="nickname" >{{item.nickName}}</text>
+        <view class="liuyan_container">
+          <text class="liuyan" wx:if="{{item.comments!=''}}" style="color: #aaa;">{{item.comments}}</text>
+          <text class="liuyan" wx:if="{{item.is_join&&(item.comments=='')}}" data-join="{{item.is_join}}" data-comments="{{item.comments}}" bindtap="onComments" style="color: #2982D2;">留言</text>
+          <text class="liuyan" wx:if="{{item.is_join&&(item.comments!='')}}" data-join="{{item.is_join}}" data-comments="" bindtap="onComments" style="color: #2982D2;">修改</text>
+        </view>
+      </view>
+      <text class="pp_name" >{{item.participate}}</text>
+    </view>
+  </view>
+</view>
+<view class="ly_input" wx:if="{{ly_input}}">
+  <input focus="{{ly_input}}" maxlength="12" cursor-spacing="{{spacing}}" confirm-type="留言" value="{{comments}}" bindblur="onInputBlur" bindconfirm="onInputConfirm" />
+</view>

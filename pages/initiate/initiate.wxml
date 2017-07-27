@@ -1,0 +1,57 @@
+<!--pages/initiate/initiate.wxml-->
+<form class="container" report-submit="true" bindsubmit="formSubmit" bindreset="formReset">
+  <view class="modify" wx:if="{{modify!=''}}">
+    <text>最后修改：{{modify}}</text>
+    <text class="reset" bindtap="formReset" >舍弃</text>
+  </view>
+  <view class="index_container">
+    <input style="width: {{windowWidth}}px" maxlength="12" placeholder-class="placeholder" placeholder="{{type_name}}主题" bindinput="onInput" bindfocus="onFocus"  value="{{title}}" />
+    <view class="graySpace"></view>
+    <view class="item_container">
+      <text class="placeholder">约见类型：</text>
+      <picker class="flex" mode="selector" range="{{types}}" bindchange="bindTypeChange">
+        <view>
+          <text>{{type}}</text>
+        </view>
+      </picker>
+      <input class="type_input" style="display:{{type_input?'none':'inline'}};" maxlength="5" bindinput="onTypeInput" value="{{type_input_name}}" />
+    </view>
+    <view class="graySpace"></view>
+    <view class="item_container tap {{time_default?'':'placeholder'}}" bindtap="bindSetDateTap">
+      <view class="date">
+        <text>{{year}}年{{week}}</text>
+      </view>
+      <view class="time">
+        <text>{{hour}}:{{minute}}</text>
+      </view>
+    </view>
+    <block wx:if="{{is_picker}}">
+    <view class="graySpace"></view>
+    <view class="item_container">
+      <picker-view indicator-class="indicator" class="picker" value="{{value}}" bindchange="bindDateChange">
+        <picker-view-column style="flex: 2">
+          <view wx:for="{{weeks}}" wx:key="*this" class="picker_column">{{item}}</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{hours}}" wx:key="*this" class="picker_column">{{item}}</view>
+        </picker-view-column>
+        <picker-view-column>
+          <view wx:for="{{minutes}}" wx:key="*this" class="picker_column">{{item}}</view>
+        </picker-view-column>
+      </picker-view>
+    </view>
+    </block>
+    <view class="graySpace"></view>
+    <view bindtap="chooseLocation" class="item_container tap {{location_default?'':'placeholder'}}">
+      <text>{{location.name}}</text>
+    </view>
+    <view class="graySpace"></view>
+    <navigator url="/pages/remind/remind" class="item_container {{remind_default?'':'placeholder'}}">
+      <text class="flex">{{remind.value}}</text>
+      <image class="widget__arrow" src="/images/arrowright.png" mode="aspectFill" />
+    </navigator>
+  </view>
+  <textarea placeholder="备注(选填)" style="width: {{windowWidth}}px" placeholder-class="placeholder" bindinput="onTextareaInput" bindfocus="onFocus" value="{{remark}}" />
+  <button type="primary" form-type="submit">发起{{type_name}}</button>
+</form>
+<view id="toast" style="opacity: {{opacity}};">{{message}}</view>

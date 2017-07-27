@@ -1,0 +1,19 @@
+<!--pages/remind/remind.wxml-->
+<form report-submit="true" bindsubmit="formSubmit">
+  <radio-group class="container" bindchange="radioChange">
+    <label class="radio">
+      <radio value="0" checked="{{checked}}"/>
+      <text>不提醒</text>
+    </label>
+    <view class="no"></view>
+    <label class="radio" wx:for="{{items}}" wx:key="{{item.name}}">
+      <radio value="{{item.name}}" checked="{{item.checked}}"/>
+      <text>{{item.value}}</text>
+    </label>
+  </radio-group>
+  <view wx:if="{{items.length == 0}}"  class="no_radio">
+    <text>见面时间已经接近当前时间，无法设置提醒</text>
+  </view>
+  <button wx:if="{{is_edit&&!is_initiate}}" type="primary" form-type="submit" >完成</button>
+</form>
+

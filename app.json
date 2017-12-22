@@ -4,6 +4,7 @@
     "pages/initiate/initiate",
     "pages/remind/remind",
     "pages/detail/detail",
+    "pages/location/location",
     "pages/detail/edit/edit"
   ],
   "window":{

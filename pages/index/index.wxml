@@ -10,7 +10,7 @@
       <text>暂无约见，点击发起</text>
     </view>
   </block>
-  <scroll-view style="height: {{height}}px;" wx:else >
+  <scroll-view style="height: {{height}}px;" scroll-y="true" wx:else >
     <view class="group_container" wx:for="{{list}}" wx:key="name" wx:for-index="idx" wx:for-item="group" wx:if="{{group.list.length != 0}}">
       <view class="name"><text>{{group.name}}</text></view>
       <view class="item_container tap" wx:for="{{group.list}}" wx:key="id" data-item="{{idx}}" data-index="{{index}}" bindtap="onViewTap" >
@@ -24,3 +24,7 @@
   <button type="primary" bindtap="onInitiateYueJian">发起约见</button>
 </view>
 <view id="toast" style="opacity: {{opacity}};">{{message}}</view>
+<view id="feedback">
+  <contact-button type="default-light" size="64" session-from="feedback"></contact-button>
+</view>
+

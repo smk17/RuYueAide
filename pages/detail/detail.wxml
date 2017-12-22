@@ -10,6 +10,10 @@
   <text class="address">{{address}}</text>
   <map latitude="{{markers[0].latitude}}" longitude="{{markers[0].longitude}}" 
     markers="{{markers}}" bindtap="mapTap"></map>
+  <view class="location_sharing  tap" bindtap="locationSharing">
+    <text class="flex">位置共享</text>
+    <image class="widget__arrow" src="/images/arrowright.png" mode="aspectFill" />
+  </view>
   <view class="remark" wx:if="{{remark != ''}}">
     <text>{{remark}}</text>
   </view>

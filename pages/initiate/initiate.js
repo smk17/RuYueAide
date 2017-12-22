@@ -74,6 +74,7 @@ Page({
    */
   formSubmit(event){
     var type = this.data.type
+    console.log(type)
     var initiate = app.globalData.initiate;
     let now = new Date();
     let remind_dete = utils.setRemindDate(initiate.remind.name, initiate.date);
@@ -89,7 +90,9 @@ Page({
         }
         return
       }
-    } else if (initiate.title == '') {
+    } 
+    
+    if (initiate.title == '') {
       this.drawToast('请填写' + type + '主题')
       return
     } else if (now > initiate.date) {

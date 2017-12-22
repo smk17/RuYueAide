@@ -30,8 +30,19 @@
 .remark{
   width: 100%; 
   padding: 20rpx 0;
+}
+.location_sharing{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%; 
+  padding: 20rpx 0;
   margin-top: 20rpx;
   border-top: 4rpx solid #f9f9f9;
+  border-bottom: 4rpx solid #f9f9f9;
+}
+.flex{
+  flex: 1;
 }
 .participate{
   width: 90%;
@@ -96,7 +107,7 @@
 }
 text{
   font-size: 36rpx;
-  margin-top: 20rpx;
+  margin: 10rpx 0;
 }
 map{
   width: 100%; 

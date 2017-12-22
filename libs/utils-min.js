@@ -1,6 +1,6 @@
 const AV = require('./av-weapp-min.js');
 const weeks = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-const types = ['见面', '饭局', '聚会', '自定义'];
+const types = ['见面', '饭局', '聚会', '约跑', '自定义'];
 
 /**
  * 格式化数字为两位数字符串
@@ -502,6 +502,7 @@ function getYueJianList(cb = null, errcb = null) {
     if (currentUser) {
       var query = new AV.Query('Participate');
       query.equalTo('user', currentUser);
+      query.descending('updatedAt');
       query.include('yuejian');
       query.find().then(function (results) {
         typeof cb == "function" && cb(results);
@@ -612,6 +613,9 @@ function getShareAppMessage(id, nickName, type) {
     case '见面':
       title += '一起见面'
       break
+    case '约跑':
+      title += '一起跑步'
+      break
     case '饭局':
       title += '加入饭局'
       break
@@ -694,9 +698,9 @@ function createParticipate(id, cb = null, errcb = null) {
 };
 
 /**
-   * 加载或更新参与者列表
-   */
-function getParticipateList(id, cb = null, errcb = null) {
+ * 获取参与者位置列表
+ */
+function getParticipateLists(id, cb = null, errcb = null){
   try {
     if (id == '' || id == null)
       return
@@ -707,50 +711,7 @@ function getParticipateList(id, cb = null, errcb = null) {
       query.equalTo('yuejian', yuejian);
       query.include('user');
       query.find().then(function (results) {
-        if (results.length == 0)
-          return
-        var participates = [];
-        var is_initiate = false;
-        var is_join = false;
-        var id = '';
-        var remind = { name: '-1', value: '提醒' };
-        var comments = '';
-        results.forEach(function (value, index, array) {
-          var _is_join = false;
-          let comm = value.get('comments') == null ? '' : value.get('comments')
-          var name = value.get('name')
-          if (value.get('user').id == currentUser.id) {
-            _is_join = true;
-            is_join = true;
-            id = value.id;
-            remind = value.get('remind');
-            comments = comm;
-            if (name == '发起人') {
-              is_initiate = true;
-            } else if (name == '参与者') {
-              is_initiate = false;
-              name = "已接受";
-            };
-          };
-          let userInfo = value.get('user').get('userInfo');
-
-          participates.push({
-            is_join: _is_join,
-            avatarUrl: userInfo.avatarUrl,
-            nickName: userInfo.nickName,
-            participate: name,
-            comments: comm
-          });
-        });
-        typeof cb == "function" && cb({
-          id: id,
-          is_join: is_join,
-          progress: false,
-          remind: remind,
-          comments: comments,
-          is_initiate: is_initiate,
-          participates: participates
-        });
+        typeof cb == "function" && cb(results, currentUser.id)
       });
     }
   } catch (error) {
@@ -758,6 +719,135 @@ function getParticipateList(id, cb = null, errcb = null) {
     typeof errcb == "function" && errcb()
     return;
   };
+};
+
+/**
+ * 加载或更新参与者位置列表
+ */
+function getLocationList(id, cb = null, errcb = null){
+  getParticipateLists(id, function (results, userid){
+    if (results.length == 0)
+      return
+    var markers = []
+    var points = []
+    var userInfos = []
+    var circles = []
+    var avatarUrls = []
+    var currentIndex = 0
+    var count = 0
+    results.forEach(function (value, index, array){
+      let user = value.get('user');
+      let location = user.get('location');
+      var isCurrentUser = false;
+      if (typeof (location) == "object" && location != null){
+        console.log(user.id, typeof (location), location)
+        let userInfo = user.get('userInfo');
+        if (user.id == userid){
+          currentIndex = count;
+          isCurrentUser = true;
+        }
+        markers.push(
+          {
+            id: count,
+            latitude: location.latitude,
+            longitude: location.longitude,
+            callout: {
+              content: userInfo.nickName,
+              color: '#2982D2',
+              fontSize: 18,
+              borderRadius: 50,
+              padding: 10,
+              bgColor: 'white',
+              display: 'ALWAYS'
+            },
+            iconPath: '/images/locate.png',
+            width: 20,
+            height: 20,
+            anchor: {x: .5, y: .6 }
+          }
+        );
+        circles.push(
+          {
+            latitude: location.latitude,
+            longitude: location.longitude,
+            fillColor: '#2982D23A',
+            radius: location.horizontalAccuracy
+          }
+        );
+        points.push({
+          latitude: location.latitude,
+          longitude: location.longitude
+        });
+        userInfos.push({
+          userId: user.id,
+          isCurrentUser: isCurrentUser,
+          nickName: userInfo.nickName,
+          latitude: location.latitude,
+          longitude: location.longitude,
+          updatedAt: user.get('updatedAt')
+        });
+        avatarUrls.push(userInfo.avatarUrl);
+        count++;
+      }
+    });
+    typeof cb == "function" && cb(markers, circles, points, avatarUrls, userInfos, currentIndex)
+  },function(){
+    typeof errcb == "function" && errcb()
+  })
+};
+
+/**
+ * 加载或更新参与者列表
+ */
+function getParticipateList(id, cb = null, errcb = null) {
+  getParticipateLists(id, function (results, userid) {
+    if (results.length == 0)
+      return
+    var participates = [];
+    var is_initiate = false;
+    var is_join = false;
+    var id = '';
+    var remind = { name: '-1', value: '提醒' };
+    var comments = '';
+    results.forEach(function (value, index, array) {
+      var _is_join = false;
+      let comm = value.get('comments') == null ? '' : value.get('comments')
+      var name = value.get('name')
+      if (value.get('user').id == userid) {
+        _is_join = true;
+        is_join = true;
+        id = value.id;
+        remind = value.get('remind');
+        comments = comm;
+        if (name == '发起人') {
+          is_initiate = true;
+        } else if (name == '参与者') {
+          is_initiate = false;
+          name = "已接受";
+        };
+      };
+      let userInfo = value.get('user').get('userInfo');
+
+      participates.push({
+        is_join: _is_join,
+        avatarUrl: userInfo.avatarUrl,
+        nickName: userInfo.nickName,
+        participate: name,
+        comments: comm
+      });
+    });
+    typeof cb == "function" && cb({
+      id: id,
+      is_join: is_join,
+      progress: false,
+      remind: remind,
+      comments: comments,
+      is_initiate: is_initiate,
+      participates: participates
+    });
+  }, function () {
+    typeof errcb == "function" && errcb()
+  })
 };
 
 /**
@@ -813,5 +903,6 @@ module.exports = {
   cancelYueJian: cancelYueJian,
   createParticipate: createParticipate,
   getParticipateList: getParticipateList,
+  getLocationList: getLocationList,
   updateParticipate: updateParticipate
 }

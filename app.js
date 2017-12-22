@@ -20,6 +20,13 @@ App({
     }
     this.initiateReset() 
   },
+
+  onShow: function () {
+    console.log('APP-onShow')
+  },
+  onHide: function () {
+    console.log('APP-onHide')
+  },
   /**
    * 重置全局信息initiate
    */
@@ -45,7 +52,46 @@ App({
     })
   },
 
-  
+  getLocation(cb = null){
+    var that = this
+    var currentUser = AV.User.current();
+    if (currentUser) {
+      if (that.globalData.isNotLocation) {
+        that.globalData.isNotLocation = false
+        wx.getLocation({
+          type: 'gcj02',
+          success: function (res) {
+            that.globalData.isNotLocation = true
+            currentUser.set('location', res).save().then(user => {
+              typeof cb == "function" && cb()
+            }).catch(console.error);
+          }, fail: function (error) {
+            that.globalData.isNotLocation = true
+            console.log(error);
+          }
+        })
+      }
+    }
+    
+  },
+
+  locationSharing(cb = null){
+    var that = this
+    if (that.globalData.locationTimes == null) {
+      that.globalData.isNotLocation = true
+      that.globalData.locationTimes = setInterval(function () {
+        that.getLocation(cb)
+      }, 2000);
+    };
+  },
+
+  stopLocationSharing(){
+    if (this.globalData.locationTimes != null){
+      clearInterval(this.globalData.locationTimes)
+      this.globalData.locationTimes = null
+      this.globalData.isNotLocation = false
+    }
+  },
 
   appInit(cb = null, ocb = null, errcb = null){
     var that = this
@@ -103,7 +149,9 @@ App({
           wx.getUserInfo({
             success: function (userInfo) {
               AV.User.loginWithWeapp().then(user => {
-                user.set(userInfo).setUsername(userInfo.userInfo.nickName).save().then(user => {
+                user.set(userInfo)
+                  .setUsername(userInfo.userInfo.nickName)
+                  .save().then(user => {
                   // 成功，此时可在控制台中看到更新后的用户信息
                   that.globalData.user = user.toJSON();
                   typeof cb == "function" && cb(that.globalData.user)
@@ -121,6 +169,8 @@ App({
   },
   globalData: {
     user: null,
+    locationTimes: null,
+    isNotLocation: false,
     appName: '约见助手',
     initiate: {}
   }

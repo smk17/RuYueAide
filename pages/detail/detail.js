@@ -85,6 +85,12 @@ Page({
     }
   },
 
+  locationSharing(){
+    wx.navigateTo({
+      url: '/pages/location/location?id=' + app.globalData.initiate.yuejian_id,
+    })
+  },
+
   /**
    * 留言
    */

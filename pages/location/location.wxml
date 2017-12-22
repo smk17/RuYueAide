@@ -1,0 +1,16 @@
+<!--pages/location/location.wxml-->
+<view class="userlist" wx:if="{{isList}}">
+  <scroll-view class="scroll-view_H scroll" scroll-x="true" style="width: 100%">
+    <view id="{{index}}" class="scroll-view-item_H img" wx:for="{{avatarUrls}}" wx:key="*this" bindtap="selectLocation">
+      <image class="img" mode="widthFix" src="{{item}}"></image>
+    </view>
+  </scroll-view>
+  <text>{{avatarUrls.length}}人在共享位置</text>
+</view>
+<map id="myMap" style="height: {{height}}px;" latitude="{{latitude}}" longitude="{{longitude}}" 
+    markers="{{markers}}" circles="{{circles}}" scale="{{scale}}"
+    controls="{{controls}}" bindcallouttap="calloutTap" 
+    bindmarkertap="calloutTap" bindcontroltap="controlTap"
+    bindregionchange="regionChange">
+  
+</map>
